@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div ref="xxxx" class="container">
     <div class="login-box">
       <button @click="handleClick(1)">最简单用法</button>
       <div class="puzzle-box">
