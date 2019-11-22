@@ -86,7 +86,7 @@ export default {
       }
     },
     _block_start_move(e) {
-      if (this.validate_doing || !this.validate_img_loaded) {
+      if (this.validate_doing || !this.validate_img_loaded || this.validate_result) {
         return;
       }
       e.preventDefault();
@@ -108,6 +108,7 @@ export default {
     _block_on_move(e) {
       if (!this.validate_doing) return true;
       if (!this.validate_is_moving) return true;
+      if(this.validate_result) return;
       e.preventDefault();
       var theEvent = window.event || e;
       if (theEvent.touches) {
@@ -134,6 +135,7 @@ export default {
     },
     _block_on_end(e) {
       if (!this.validate_doing) return true;
+      if(this.validate_result) return;
       e.preventDefault();
       var theEvent = window.event || e;
       if (theEvent.touches) {
