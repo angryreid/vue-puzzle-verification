@@ -1,8 +1,8 @@
 <template>
   <div ref="validate_box">
     <div ref="tncode_start" class="this" style="text-align: center;margin: 100px auto;"></div>
-    <div class="this_div_bg" id="this_div_bg"></div>
-    <div class="this_div" id="this_div">
+    <div class="this_div_bg" ref="this_div_bg"></div>
+    <div class="this_div" ref="this_div">
       <div class="loading">加载中</div>
       <canvas ref="this_canvas_bg" class="this_canvas_bg"></canvas>
       <canvas ref="this_canvas_mark" class="this_canvas_mark"></canvas>
@@ -46,7 +46,7 @@ export default {
       validate_img_w: 240,
       validate_img_h: 150,
       validate_result: false,
-      validate_err_c: 0,
+      validate_err_c: 1,
       validate_onsuccess: null,
       single_img_check_time: 5
     };
@@ -150,7 +150,8 @@ export default {
       };
       this.validate_result = false;
       console.log(this.validate_mark_offset);
-      this._sendvalidate_result_success();
+      this._sendvalidate_result_success("ok");
+      // trigger success fn
       // var re = new _ajax();
       // send result
       // re.request(
@@ -170,7 +171,7 @@ export default {
           this.validate_onsuccess();
         }
       } else {
-        var obj = document.getElementById("this_div");
+        let obj = this.$refs.this_div;
         this.addClass(obj, "dd");
         setTimeout(() => {
           this.removeClass(obj, "dd");
@@ -302,12 +303,12 @@ export default {
       }
       this.refresh();
       this._this = this;
-      document.getElementById("this_div_bg").style.display = "block";
-      document.getElementById("this_div").style.display = "block";
+      this.$refs.this_div_bg.style.display = "block";
+      this.$refs.this_div.style.display = "block";
     },
     hide() {
-      document.getElementById("this_div_bg").style.display = "none";
-      document.getElementById("this_div").style.display = "none";
+      this.$refs.this_div_bg.style.display = "none";
+      this.$refs.this_div.style.display = "none";
     },
     _showmsg(msg, status) {
       let obj;
@@ -384,7 +385,7 @@ export default {
           .toDataURL("image/webp")
           .indexOf("data:image/webp") == 0;
       let _this = this;
-      this.validate_err_c = 0;
+      this.validate_err_c = 1;
       this.validate_is_draw_bg = false;
       this.validate_result = false;
       this.validate_img_loaded = false;
@@ -553,7 +554,7 @@ export default {
 }
 @-o-keyframes ddf {
   0% {
-    -o-transform: translate(-8px, 3px);
+    -o-transform: translate(-5px, 3px);
   }
   20% {
     -o-transform: translate(-3px, 1.5px);
@@ -570,7 +571,7 @@ export default {
 }
 @-moz-keyframes ddf {
   0% {
-    -moz-transform: translate(-8px, 3px);
+    -moz-transform: translate(-5px, 3px);
   }
   20% {
     -moz-transform: translate(-3px, 1.5px);
@@ -587,7 +588,7 @@ export default {
 }
 @keyframes ddf {
   0% {
-    transform: translate(-8px, 3px);
+    transform: translate(-5px, 3px);
   }
   20% {
     transform: translate(-3px, 1.5px);
@@ -728,6 +729,8 @@ export default {
 }
 
 .slide_block {
+  /* 应用 CSS 属性 touch-action: none; 这样任何触摸事件都不会产生默认行为 */
+  touch-action: none;
   background-position: 0px 12.9794%;
   width: 65px;
   height: 65px;
