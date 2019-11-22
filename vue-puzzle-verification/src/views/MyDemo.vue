@@ -47,7 +47,6 @@ export default {
       validate_img_h: 150,
       validate_result: false,
       validate_err_c: 1,
-      validate_onsuccess: null,
       single_img_check_time: 5
     };
   },
@@ -167,9 +166,7 @@ export default {
         this.validate_result = true;
         this.$refs.hgroup.style.display = "block";
         setTimeout(this.hide, 3000);
-        if (this.validate_onsuccess) {
-          this.validate_onsuccess();
-        }
+        this.onsuccess();
       } else {
         let obj = this.$refs.this_div;
         this.addClass(obj, "dd");
@@ -447,8 +444,8 @@ export default {
     result() {
       return this.validate_result;
     },
-    onsuccess(fn) {
-      this.validate_onsuccess = fn;
+    onsuccess() {
+      console.log("success");
     }
   }
 };
